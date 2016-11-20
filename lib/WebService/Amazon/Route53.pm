@@ -22,7 +22,8 @@ service.
     
     # Create a new zone
     $r53->create_hosted_zone(name => 'example.com.',
-                             caller_reference => 'example.com_migration_01');
+                             caller_reference => 'example.com_migration_01',
+			     delegation_set_id => 'ABC1234');
     
     # Get zone information
     my $response = $r53->find_hosted_zone(name => 'example.com.');
@@ -240,7 +241,8 @@ given name.
 Creates a new hosted zone.
 
     $response = $r53->create_hosted_zone(name => 'example.com.',
-                                         caller_reference => 'example.com_01');
+                                         caller_reference => 'example.com_01',
+					 delegation_set_id => 'ABC1234');
 
 Parameters:
 
@@ -253,6 +255,10 @@ B<(Required)> New hosted zone name.
 =item * caller_reference
 
 B<(Required)> A unique string that identifies the request.
+
+=item * delegation_set_id
+
+B<(Optional)> An optional delegation set to create this zone with. If this isn't specified Route53 will dynamically assign.
 
 =back
 

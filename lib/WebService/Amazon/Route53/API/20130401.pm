@@ -272,7 +272,8 @@ sub find_hosted_zone {
 Creates a new hosted zone.
 
     $response = $r53->create_hosted_zone(name => 'example.com.',
-                                         caller_reference => 'example.com_01');
+                                         caller_reference => 'example.com_01',
+					 delegation_set_id => 'ABC1234');
 
 Parameters:
 
@@ -285,6 +286,9 @@ B<(Required)> New hosted zone name.
 =item * caller_reference
 
 B<(Required)> A unique string that identifies the request.
+
+=item * delegation_set_id
+B<(Optional)> Supply a Delegation Set ID to tie this Hosted Zone to. If not specified Route53 will dynamically assign the delegation set across the AWS DNS clusters.
 
 =back
 
@@ -336,6 +340,7 @@ sub create_hosted_zone {
         'xmlns' => $self->{base_url} . 'doc/'. $self->{api_version} . '/',
         'Name' => [ $args{'name'} ],
         'CallerReference' => [ $args{'caller_reference'} ],
+	'DelegationSetId' => $args{'delegation_set_id'} ? $args{'delegation_set_id'} : undef,
         'HostedZoneConfig' => $args{'comment'} ? {
             'Comment' => [ $args{'comment'} ]
         } : undef,

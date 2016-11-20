@@ -22,7 +22,8 @@ service.
     
     # Create a new zone
     $r53->create_hosted_zone(name => 'example.com.',
-                             caller_reference => 'example.com_migration_01');
+                             caller_reference => 'example.com_migration_01',
+			     delegation_set_id => 'ABC1234');
     
     # Get zone information
     my $response = $r53->find_hosted_zone(name => 'example.com.');
